@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum ML - FTSE 100 Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>Quantum ML</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#models" class="nav-link">Models</a>
+                <a href="#data" class="nav-link">Data</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <!-- ...existing code... -->
+<span class="metric-label">
+    Accuracy
+    <span title="How often the model is correct. Higher is better." style="cursor:help; color:#00d4ff;">&#9432;</span>
+</span>
+<!-- ...repeat for Precision, Recall, etc... -->
+                    <br>FTSE 100 Predictor
+                </h1>
+                <!-- ...inside .hero-content... -->
+<p style="margin-top:1rem; font-size:1.1rem; color:#fff; background:#00336622; padding:0.7em 1em; border-radius:8px;">
+    <strong>How to use:</strong> Click "Get Live Prediction" to see if the FTSE 100 is likely to go up or down tomorrow.
+</p>
+<!-- ...existing code... -->
+                <button class="cta-button" onclick="runPrediction()">
+                    <i class="fas fa-play"></i>
+                    Get Live Prediction
+                </button>
+            </div>
+            <div class="hero-visual">
+                <div class="quantum-animation">
+                    <div class="qubit"></div>
+                    <div class="qubit"></div>
+                    <div class="qubit"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prediction Section -->
+        <section class="prediction-section"  id="live-prediction">
+            <div class="container">
+                <h2 class="section-title">Live Prediction</h2>
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        <div class="prediction-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="prediction-info">
+                            <h3>FTSE 100 Tomorrow</h3>
+                            <p class="prediction-time">Last updated: <span id="lastUpdate">-</span></p>
+                        </div>
+                    </div>
+                    <div class="prediction-result" id="predictionResult">
+                        <div class="prediction-placeholder">
+                            <i class="fas fa-robot"></i>
+                            <p>Click "Get Live Prediction" to see the forecast</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Models Section -->
+        <section class="models-section" id="models">
+            <div class="container">
+                <h2 class="section-title">Model Performance</h2>
+                <div class="models-grid">
+                    <div class="model-card">
+                        <div class="model-header">
+                            <i class="fas fa-brain"></i>
+                            <h3>Random Forest</h3>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Accuracy</span>
+                                <span class="metric-value" id="rf-accuracy">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Precision</span>
+                                <span class="metric-value" id="rf-precision">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Recall</span>
+                                <span class="metric-value" id="rf-recall">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="model-card">
+                        <div class="model-header">
+                            <i class="fas fa-atom"></i>
+                            <h3>Hybrid Quantum</h3>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Accuracy</span>
+                                <span class="metric-value" id="hybrid-accuracy">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Precision</span>
+                                <span class="metric-value" id="hybrid-precision">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Recall</span>
+                                <span class="metric-value" id="hybrid-recall">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="model-card">
+                        <div class="model-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>SVM</h3>
+                        </div>
+                        <div class="model-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Accuracy</span>
+                                <span class="metric-value" id="svm-accuracy">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Precision</span>
+                                <span class="metric-value" id="svm-precision">-</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Recall</span>
+                                <span class="metric-value" id="svm-recall">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Section -->
+        <section class="data-section" id="data">
+            <div class="container">
+                <h2 class="section-title">Market Data</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>FTSE 100 Price</h3>
+                        <div class="price-display">
+                            <span class="currency">£</span>
+                            <span class="price" id="currentPrice">-</span>
+                        </div>
+                        <div class="price-change" id="priceChange">
+                            <span class="change-amount">-</span>
+                            <span class="change-percent">-</span>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <h3>Data Points</h3>
+                        <div class="data-stat">
+                            <span class="stat-number" id="dataPoints">-</span>
+                            <span class="stat-label">Trading Days</span>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <h3>Features</h3>
+                        <div class="data-stat">
+                            <span class="stat-number" id="featureCount">-</span>
+                            <span class="stat-label">Technical Indicators</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section about-floating" id="about">
+    <h2 class="section-title">About This Project</h2>
+    <div class="about-content">
+        <div class="about-text">
+            <h3>Quantum Machine Learning for Financial Prediction</h3>
+            <p>This system uses advanced quantum computing algorithms combined with classical machine learning to predict FTSE 100 market movements. It analyzes 60 different technical indicators and uses multiple AI models to generate predictions.</p>
+            <div class="tech-stack">
+                <h4>Technology Stack:</h4>
+                <ul>
+                    <li><i class="fas fa-atom"></i> Qiskit (Quantum Computing)</li>
+                    <li><i class="fas fa-brain"></i> Scikit-learn (Machine Learning)</li>
+                    <li><i class="fas fa-chart-bar"></i> Technical Analysis</li>
+                    <li><i class="fas fa-database"></i> Yahoo Finance API</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Running Quantum ML Models...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
